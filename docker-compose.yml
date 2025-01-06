@@ -6,6 +6,8 @@ services:
     # Build the image in the current directory
     build:
       context: .
+      args:
+        - DEV=true
     # Map port 8000 in our local machine to port 8000 inside our docker container
     ports:
       - "8000:8000"
