@@ -1,0 +1,17 @@
+# Specify the version of our docker compose syntax in case the new release version breaking our configurations
+version: "3.9"
+
+services:
+  app:
+    # Build the image in the current directory
+    build:
+      context: .
+    # Map port 8000 in our local machine to port 8000 inside our docker container
+    ports:
+      - "8000:8000"
+    # Map the app directory that we created for the project to the app directory inside the container
+    # Automatically sync the project code without rebuilding the image
+    volumes:
+      - ./app:/app
+    command: >
+      sh -c "python manage.py runserver 0.0.0.0:8000"
