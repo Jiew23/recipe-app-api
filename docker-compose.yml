@@ -1,5 +1,5 @@
 # Specify the version of our docker compose syntax in case the new release version breaking our configurations
-version: "3.9"
+# version: "3.9"
 
 services:
   app:
