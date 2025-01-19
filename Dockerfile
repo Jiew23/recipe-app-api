@@ -17,11 +17,17 @@ EXPOSE 8000
 ARG DEV=false
 RUN python -m venv /py && \
     /py/bin/pip install --upgrade pip && \
+    # Install the postgresql-client. Required for Psycopg2 (Postgresql adaptor)
+    apk add --update --no-cache postgresql-client && \ 
+    # Sets a virutal dependency package. Groups the packages installed 
+    apk add --update --no-cache --virtual .tmp-build-deps \
+        build-base postgresql-dev musl-dev &&\
     /py/bin/pip install -r /tmp/requirements.txt && \
     if [ $DEV = "true" ]; \
         then /py/bin/pip install -r /tmp/requirements.dev.txt ; \
     fi &&\
     rm -rf /tmp && \
+    apk del .tmp-build-deps &&\
     # Create a new user to avoid using the root user
     adduser \
         --disabled-password \
